@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/design_default_color_primary</color>
+    <color name="colorPrimaryDark">@color/design_default_color_primary_variant</color>
+    <color name="navigationBarColor">#888888</color>
+    <color name="cardViewBackground">@color/cardview_light_background</color>
+</resources>

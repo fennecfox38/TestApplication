@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    tools:context=".PersonalData.RegisterDataActivity">
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/Name"
+        android:textSize="20sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/txt_pw"
+        app:layout_constraintEnd_toStartOf="@+id/space_between_name"
+        app:layout_constraintHorizontal_weight="3.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Space
+        android:id="@+id/space_between_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_name"
+        app:layout_constraintEnd_toStartOf="@+id/edittxt_name"
+        app:layout_constraintHorizontal_weight="0.1"
+        app:layout_constraintStart_toEndOf="@+id/txt_name"
+        app:layout_constraintTop_toTopOf="@+id/txt_name" />
+
+    <EditText
+        android:id="@+id/edittxt_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/NameHint"
+        android:inputType="textPersonName"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txt_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintStart_toEndOf="@+id/space_between_name" />
+
+    <TextView
+        android:id="@+id/txt_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/Password"
+        android:textSize="20sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/txt_birth"
+        app:layout_constraintEnd_toStartOf="@+id/space_between_pw"
+        app:layout_constraintHorizontal_weight="3.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_name" />
+
+    <Space
+        android:id="@+id/space_between_pw"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_pw"
+        app:layout_constraintEnd_toStartOf="@+id/edittxt_pw"
+        app:layout_constraintHorizontal_weight="0.1"
+        app:layout_constraintStart_toEndOf="@+id/txt_pw"
+        app:layout_constraintTop_toTopOf="@+id/txt_pw" />
+
+    <EditText
+        android:id="@+id/edittxt_pw"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:hint="@string/PasswordHint"
+        android:inputType="textPassword"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txt_pw"
+        app:layout_constraintEnd_toStartOf="@+id/btn_verify"
+        app:layout_constraintHorizontal_weight="8"
+        app:layout_constraintStart_toEndOf="@+id/space_between_pw" />
+
+    <Button
+        android:id="@+id/btn_verify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="@string/Verify"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edittxt_pw"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toEndOf="@+id/edittxt_pw" />
+
+    <TextView
+        android:id="@+id/txt_birth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/Birthday"
+        android:textSize="20sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/rGroup_sex"
+        app:layout_constraintEnd_toStartOf="@+id/space_between_birth"
+        app:layout_constraintHorizontal_weight="4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_pw" />
+
+    <Space
+        android:id="@+id/space_between_birth"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_birth"
+        app:layout_constraintEnd_toStartOf="@+id/edittxt_birth"
+        app:layout_constraintHorizontal_weight="0.1"
+        app:layout_constraintStart_toEndOf="@+id/txt_birth"
+        app:layout_constraintTop_toTopOf="@+id/txt_birth" />
+
+    <EditText
+        android:id="@+id/edittxt_birth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:hint="YYYY.MM.DD"
+        android:inputType="none"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txt_birth"
+        app:layout_constraintEnd_toStartOf="@+id/space_birth_age"
+        app:layout_constraintHorizontal_weight="4"
+        app:layout_constraintStart_toEndOf="@+id/space_between_birth" />
+
+    <Space
+        android:id="@+id/space_birth_age"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edittxt_birth"
+        app:layout_constraintEnd_toStartOf="@+id/txt_age"
+        app:layout_constraintHorizontal_weight="0.2"
+        app:layout_constraintStart_toEndOf="@+id/edittxt_birth"
+        app:layout_constraintTop_toTopOf="@+id/edittxt_birth" />
+
+    <TextView
+        android:id="@+id/txt_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Age"
+        android:textSize="20sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edittxt_birth"
+        app:layout_constraintEnd_toStartOf="@+id/space_between_age"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toEndOf="@+id/space_birth_age" />
+
+    <Space
+        android:id="@+id/space_between_age"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_age"
+        app:layout_constraintEnd_toStartOf="@+id/edittxt_age"
+        app:layout_constraintHorizontal_weight="0.1"
+        app:layout_constraintStart_toEndOf="@+id/txt_age"
+        app:layout_constraintTop_toTopOf="@+id/txt_age" />
+
+    <EditText
+        android:id="@+id/edittxt_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:hint="0"
+        android:inputType="none"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txt_age"
+        app:layout_constraintEnd_toStartOf="@+id/space_end_age"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toEndOf="@+id/space_between_age" />
+
+    <Space
+        android:id="@+id/space_end_age"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edittxt_age"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toEndOf="@+id/edittxt_age"
+        app:layout_constraintTop_toTopOf="@+id/edittxt_age" />
+
+    <RadioGroup
+        android:id="@+id/rGroup_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/txt_marriage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_birth">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="@string/Sex"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/rBtn_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Male" />
+
+        <RadioButton
+            android:id="@+id/rBtn_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/Female" />
+
+        <RadioButton
+            android:id="@+id/rBtn_NA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/NA" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/txt_marriage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/Marriage"
+        android:textSize="20sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/btn_clear"
+        app:layout_constraintEnd_toStartOf="@+id/spin_marriage"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rGroup_sex" />
+
+    <Spinner
+        android:id="@+id/spin_marriage"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_marriage"
+        app:layout_constraintEnd_toStartOf="@+id/chkbx_child"
+        app:layout_constraintStart_toEndOf="@+id/txt_marriage"
+        app:layout_constraintTop_toTopOf="@+id/txt_marriage" />
+
+    <CheckBox
+        android:id="@+id/chkbx_child"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/HaveChildren"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spin_marriage"
+        app:layout_constraintTop_toTopOf="@+id/spin_marriage" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:inputType="text"
+        android:text="@string/Submit"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_clear"
+        app:layout_constraintEnd_toStartOf="@+id/btn_clear"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:inputType="text"
+        android:text="@string/Clear"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_submit"
+        app:layout_constraintTop_toBottomOf="@+id/txt_marriage" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

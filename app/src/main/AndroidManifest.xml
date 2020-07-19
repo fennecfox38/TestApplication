@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.test">
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PersonalData.PersonalDataActivity"
+            android:label="@string/title_activity_personal_data"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PersonalData.RegisterDataActivity"
+            android:label="@string/RegisterDataActivityTitle"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".DialActivity"
+            android:label="@string/Dial">
+        </activity>
+        <activity
+            android:name=".OpenPDFActivity"
+            android:label="@string/openPDF">
+        </activity>
+        <activity
+            android:name=".CreditActivity"
+            android:label="@string/Credit">
+        </activity>
+
+        <!--<provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path" />
+        </provider>-->
+    </application>
+
+</manifest>
