@@ -17,6 +17,7 @@
     <string name="PasswordHint">Type Password</string>
     <string name="Verify">Verify</string>
     <string name="Birthday">Birthday</string>
+    <string name="ChooseBirthdayFirst">Please choose birthday first.</string>
     <string name="Age">Age</string>
     <string name="Sex">Sex</string>
     <string name="Male">Male</string>

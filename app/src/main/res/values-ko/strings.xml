@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">테스트어플리케이션</string>
-    <string name="welcome">어서오세요! 아래는 메뉴입니다.</string>
+    <string name="welcome">어서오십시오! 아래는 메뉴입니다.</string>
     <string name="PersonalData">개인정보</string>
     <string name="Dial">전화</string>
     <string name="openPDF">PDF 열기</string>
@@ -11,13 +11,14 @@
     <string name="OK">확인</string>
     <string name="Cancel">취소</string>
     <string name="RegisterDataActivityTitle">인적사항 등록</string>
-    <string name="SearchHint">검색할 단어를 입력하시오.</string>
+    <string name="SearchHint">검색할 단어를 입력하십시오.</string>
     <string name="Name">이름</string>
-    <string name="NameHint">이름을 입력하세요.</string>
+    <string name="NameHint">이름을 입력하십시오.</string>
     <string name="Password">비밀번호</string>
-    <string name="PasswordHint">비밀번호를 입력하시오.</string>
+    <string name="PasswordHint">비밀번호를 입력하십시오.</string>
     <string name="Verify">확인</string>
     <string name="Birthday">생일</string>
+    <string name="ChooseBirthdayFirst">생일을 먼저 선택하십시오.</string>
     <string name="Age">나이</string>
     <string name="Sex">성별</string>
     <string name="Male">남성</string>

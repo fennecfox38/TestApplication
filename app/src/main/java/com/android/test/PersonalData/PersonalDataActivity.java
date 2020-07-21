@@ -1,3 +1,15 @@
+/**************************************************************************************************************************************
+ * File: PersonalDataActivity.java
+ * Parent Package : com.android.test.PersonalData
+ * Author: JunGu Kang (fennecfox38@gmail.com)
+ *
+ * This Activity 'PersonalDataActivity' is main activity for this package 'com.android.test.PersonalData'.
+ * This Activity is designed to handle 'list' and 'db' of 'PersonalData'
+ *                              based on class 'PersonalData', 'PersonRecycleAdapter','PersonalDataDBHelper'.
+ * List will be derived from db 'onCreate', and saved to db 'onDestroy'.
+ * List will be shown by 'RecyclerView' (androidx.recyclerview.widget.RecyclerView)
+ * When add new or edit 'PersonalData' is requested, it calls 'RegisterDataActivity' to modify data.
+ **************************************************************************************************************************************/
 package com.android.test.PersonalData;
 
 import android.content.ContentValues;
@@ -44,9 +56,10 @@ public class PersonalDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_data);
 
         ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
+        assert actionBar != null; // Show title and 'HomeAsUp' on Action Bar
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_HOME_AS_UP);
 
+        // Floating Action Button adds person.
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) { call_RegisterData_Add(); }
         });
@@ -160,7 +173,7 @@ public class PersonalDataActivity extends AppCompatActivity {
     protected void action_share(){
         ArrayList<PersonalData> list = personAdapter.getList();
         StringBuilder strBuild = new StringBuilder();
-        for(PersonalData pd : list){ strBuild.append("\n"); strBuild.append(pd.toString());  }
+        for(PersonalData pd : list){ strBuild.append("\n"); strBuild.append(pd.toString(getResources()));  }
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, strBuild.toString());
         sendIntent.setType("text/plain");
