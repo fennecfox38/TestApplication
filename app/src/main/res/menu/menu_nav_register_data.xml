@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_person1"
+            android:icon="@drawable/ic_person"
+            android:title="@string/Person1" />
+        <item
+            android:id="@+id/menu_person2"
+            android:icon="@drawable/ic_person"
+            android:title="@string/Person2" />
+        <item
+            android:id="@+id/menu_person3"
+            android:icon="@drawable/ic_person"
+            android:title="@string/Person3" />
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_person4"
+            android:icon="@drawable/ic_person"
+            android:title="@string/Person4" />
+        <item
+            android:id="@+id/menu_person5"
+            android:icon="@drawable/ic_person"
+            android:title="@string/Person5" />
+        <item
+            android:id="@+id/menu_person6"
+            android:icon="@drawable/ic_person"
+            android:title="@string/Person6" />
+    </group>
+</menu>

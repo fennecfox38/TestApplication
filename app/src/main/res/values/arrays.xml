@@ -5,4 +5,12 @@
         <item>@string/Married</item>
         <item>@string/Divorced</item>
     </string-array>
+    <string-array name="sample_person">
+        <item>John</item>
+        <item>Sally</item>
+        <item>Shadow</item>
+        <item>홍길동</item>
+        <item>김영희</item>
+        <item>바둑이</item>
+    </string-array>
 </resources>

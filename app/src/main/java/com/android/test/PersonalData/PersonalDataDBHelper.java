@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 import android.widget.Toast;
 
 public class PersonalDataDBHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME="PersonalData.db";
+    public static final String DATABASE_NAME="PersonalData.db";
     private static final int DATABASE_VERSION=1;
     private Context context;
 

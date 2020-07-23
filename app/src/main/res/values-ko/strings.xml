@@ -10,8 +10,10 @@
     <string name="AskClose">이 어플리케이션을 종료하시겠습니까?</string>
     <string name="OK">확인</string>
     <string name="Cancel">취소</string>
+    <string name="Setting">설정</string>
     <string name="RegisterDataActivityTitle">인적사항 등록</string>
     <string name="SearchHint">검색할 단어를 입력하십시오.</string>
+    <string name="PresetPerson">기본 설정값을 아래로부터 불러올 수 있습니다.</string>
     <string name="Name">이름</string>
     <string name="NameHint">이름을 입력하십시오.</string>
     <string name="Password">비밀번호</string>

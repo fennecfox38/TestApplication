@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,9 +33,13 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.android.test.R;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Locale;
 
@@ -47,6 +52,8 @@ public class RegisterDataActivity extends AppCompatActivity {
     private ArrayAdapter<String> arrAdapt_spin;
     private CheckBox chkbx_child;
     private Button btn_verify, btn_submit, btn_clear;
+    private DrawerLayout drawer_register_data;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -54,6 +61,25 @@ public class RegisterDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_data);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Enable 'HomeAsUp' from ActionBar.
+
+        drawer_register_data = findViewById(R.id.drawer_register_data);
+        navigationView = findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.menu_person1: person = new PersonalData(getString(R.string.Person1),"1q2w3e4r5t!",1975,3,21,PersonalData.Sex.Male,PersonalData.Marriage.Divorced,true); break;
+                    case R.id.menu_person2: person = new PersonalData(getString(R.string.Person2),"1q2w3e4r5t!",1994,10,8,PersonalData.Sex.Female,PersonalData.Marriage.Married,false); break;
+                    case R.id.menu_person3: person = new PersonalData(getString(R.string.Person3),"qwerty",2019,1,24, PersonalData.Sex.Female, PersonalData.Marriage.Single,false); break;
+                    case R.id.menu_person4: person = new PersonalData(getString(R.string.Person4),"1q2w3e4r5t!",1985,7,19,PersonalData.Sex.Male,PersonalData.Marriage.Married,true); break;
+                    case R.id.menu_person5: person = new PersonalData(getString(R.string.Person5),"1q2w3e4r5t!",1990,12,23,PersonalData.Sex.Female,PersonalData.Marriage.Married,false); break;
+                    case R.id.menu_person6: person = new PersonalData(getString(R.string.Person6),"qwerty",2019,6,20, PersonalData.Sex.Male, PersonalData.Marriage.Single,false); break;
+                }
+                loadDataToField();
+                drawer_register_data.closeDrawer(GravityCompat.END);
+                return false;
+            }
+        });
 
         edittxt_name=findViewById(R.id.edittxt_name);
         edittxt_name.addTextChangedListener(new TextWatcher() { // Set TextWatcher as TextChangeListener for 'edittxt_name'
@@ -185,14 +211,20 @@ public class RegisterDataActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        setResult(RESULT_CANCELED);
-        finish();
+        if(drawer_register_data.isDrawerOpen(GravityCompat.END)) drawer_register_data.closeDrawers();
+        else{
+            super.onBackPressed();
+            setResult(RESULT_CANCELED);
+        }
+    }
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_action_register_data,menu);
+        return super.onCreateOptionsMenu(menu);
     }
     @Override public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home){
-            setResult(RESULT_CANCELED);
-            finish();
+        switch (item.getItemId()){
+            case android.R.id.home: onBackPressed(); break;
+            case R.id.menu_btn_nav: drawer_register_data.openDrawer(GravityCompat.END);
         } return super.onOptionsItemSelected(item);
     }
 }

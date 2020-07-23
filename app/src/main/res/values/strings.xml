@@ -9,8 +9,16 @@
     <string name="AskClose">Do you want to exit this application?</string>
     <string name="OK">OK</string>
     <string name="Cancel">Cancel</string>
+    <string name="Setting">Setting</string>
     <string name="RegisterDataActivityTitle">Register Personnel</string>
     <string name="SearchHint">Type keyword to search</string>
+    <string name="PresetPerson">You can load preset person from below.</string>
+    <string name="Person1" translatable="false">John</string>
+    <string name="Person2" translatable="false">Sally</string>
+    <string name="Person3" translatable="false">Shadow</string>
+    <string name="Person4" translatable="false">홍길동</string>
+    <string name="Person5" translatable="false">김영희</string>
+    <string name="Person6" translatable="false">바둑이</string>
     <string name="Name">Name</string>
     <string name="NameHint">Type Name</string>
     <string name="Password">PW</string>

@@ -19,6 +19,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.util.TypedValue;
@@ -41,6 +42,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,10 +72,6 @@ public class PersonalDataActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)) ;
 
-        /*ArrayList<PersonalData> list = new ArrayList<>();
-        list.add(new PersonalData("홍길동","1q2w3e4r5t!",1988,3,21,PersonalData.Sex.Male,PersonalData.Marriage.Divorced,true));
-        list.add(new PersonalData("김영희","1q2w3e4r5t!",1994,10,8,PersonalData.Sex.Female,PersonalData.Marriage.Married,false));
-        personAdapter = new PersonRecyclerAdapter(list);*/
         personAdapter = new PersonRecyclerAdapter();
         personAdapter.setOnItemClickListener(new PersonRecyclerAdapter.OnItemClickListener() {
             @Override public void onItemClick(View view, int position) {
@@ -144,8 +145,8 @@ public class PersonalDataActivity extends AppCompatActivity {
             case android.R.id.home: finish(); break;
             case R.id.menu_add: call_RegisterData_Add(); break;
             case R.id.menu_search: break;
-            case R.id.menu_import: Toast.makeText(getApplicationContext(),getString(R.string.Import),Toast.LENGTH_SHORT).show(); break;
-            case R.id.menu_export: Toast.makeText(getApplicationContext(),getString(R.string.Export),Toast.LENGTH_SHORT).show(); break;
+            case R.id.menu_import: action_import(); break;
+            case R.id.menu_export: action_export(); break;
             case R.id.menu_share: action_share(); break;
         }
         return super.onOptionsItemSelected(item);
@@ -169,6 +170,33 @@ public class PersonalDataActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) { personAdapter.addPerson(backup); }
                 }).show();
+    }
+    protected void action_import(){
+        Toast.makeText(getApplicationContext(),getString(R.string.Import),Toast.LENGTH_SHORT).show();
+    }
+    protected void action_export(){
+        /*try{
+            String exportDBPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            String dataDBPath = Environment.getDataDirectory().getAbsolutePath();
+
+            dataDBPath += "/data/"+getPackageName()+"/databases/"+PersonalDataDBHelper.DATABASE_NAME;
+            exportDBPath += PersonalDataDBHelper.DATABASE_NAME;
+
+            File dataDB = new File(dataDBPath);
+            File exportDB = new File(exportDBPath);
+
+            if(dataDB.exists()){
+                FileChannel src = new FileInputStream(dataDB).getChannel();
+                FileChannel dst = new FileOutputStream(exportDB).getChannel();
+                dst.transferFrom(src,0,src.size());
+                src.close();
+                dst.close();
+            }else{Toast.makeText(getApplicationContext(),"Data not existed",Toast.LENGTH_SHORT).show();}
+            if(exportDB.exists())
+                Toast.makeText(getApplicationContext(),getString(R.string.Export),Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }*/
     }
     protected void action_share(){
         ArrayList<PersonalData> list = personAdapter.getList();
