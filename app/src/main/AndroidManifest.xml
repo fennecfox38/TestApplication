@@ -32,10 +32,6 @@
             android:label="@string/RegisterDataActivityTitle"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".DialActivity"
-            android:label="@string/Dial">
-        </activity>
-        <activity
             android:name=".OpenPDFActivity"
             android:label="@string/openPDF">
         </activity>

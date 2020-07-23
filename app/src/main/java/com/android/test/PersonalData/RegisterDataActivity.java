@@ -53,7 +53,7 @@ public class RegisterDataActivity extends AppCompatActivity {
     private CheckBox chkbx_child;
     private Button btn_verify, btn_submit, btn_clear;
     private DrawerLayout drawer_register_data;
-    private NavigationView navigationView;
+    private NavigationView nav_register_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -63,8 +63,8 @@ public class RegisterDataActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Enable 'HomeAsUp' from ActionBar.
 
         drawer_register_data = findViewById(R.id.drawer_register_data);
-        navigationView = findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        nav_register_data = findViewById(R.id.navigationView);
+        nav_register_data.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){

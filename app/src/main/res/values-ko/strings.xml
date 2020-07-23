@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">테스트어플리케이션</string>
+    <string name="Home">홈</string>
     <string name="welcome">어서오십시오! 아래는 메뉴입니다.</string>
     <string name="PersonalData">개인정보</string>
     <string name="Dial">전화</string>

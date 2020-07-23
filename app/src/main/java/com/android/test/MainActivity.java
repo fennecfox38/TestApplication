@@ -6,21 +6,20 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.android.test.PersonalData.PersonalDataActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer_main;
     private NavigationView nav_main;
+    private Fragment frag_home, frag_dial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,42 +31,41 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_hamburger);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_HOME_AS_UP);
 
+        frag_home = new HomeFragment();
+        frag_dial = new DialFragment();
+        FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+        fragTransaction.add(R.id.FrameLayout_main, frag_home);
+        fragTransaction.commit();
+
         drawer_main=findViewById(R.id.drawer_main);
         nav_main=findViewById(R.id.nav_main);
         nav_main.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.menu_dial: Toast.makeText(getApplicationContext(),"dial",Toast.LENGTH_SHORT).show(); break;
-                    case R.id.menu_credit: Toast.makeText(getApplicationContext(),"credit",Toast.LENGTH_SHORT).show(); break;
-                    case R.id.menu_setting: Toast.makeText(getApplicationContext(),"setting",Toast.LENGTH_SHORT).show(); break;
+                    case R.id.menu_home: switchFragment(frag_home); break;
+                    case R.id.menu_dial: switchFragment(frag_dial); break;
+                    case R.id.menu_credit: Toast.makeText(getApplicationContext(),getString(R.string.Credit),Toast.LENGTH_SHORT).show(); break;
+                    case R.id.menu_setting: Toast.makeText(getApplicationContext(),getString(R.string.Setting),Toast.LENGTH_SHORT).show(); break;
                 }
                 drawer_main.closeDrawer(GravityCompat.START);
                 return false;
             }
         });
 
-        findViewById(R.id.btn_dataactivity).setOnClickListener(btnOnClickListen);
-        findViewById(R.id.btn_dialactivity).setOnClickListener(btnOnClickListen);
-        findViewById(R.id.btn_openPDFactivity).setOnClickListener(btnOnClickListen);
-        findViewById(R.id.btn_creditactivity).setOnClickListener(btnOnClickListen);
     }
 
-    Button.OnClickListener btnOnClickListen=new Button.OnClickListener(){
-        @Override public void onClick(View view){
-            Class<?> class_Activity;
-            switch(view.getId()){
-                case R.id.btn_dataactivity: class_Activity=PersonalDataActivity.class; break;
-                case R.id.btn_dialactivity: class_Activity=DialActivity.class; break;
-                case R.id.btn_openPDFactivity: class_Activity=OpenPDFActivity.class; break;
-                case R.id.btn_creditactivity: class_Activity=CreditActivity.class; break;
-                default: class_Activity=null; break; }
-            startActivity(new Intent(getApplicationContext(),class_Activity));
-        }
-    };
+    protected void switchFragment(Fragment frag){
+        FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+        fragTransaction.replace(R.id.FrameLayout_main,frag);
+        fragTransaction.commit();
+    }
 
     @Override public void onBackPressed() {
         if(drawer_main.isDrawerOpen(GravityCompat.START)) { drawer_main.closeDrawers(); return; }
+        if(getSupportFragmentManager().findFragmentById(R.id.FrameLayout_main)!=frag_home){
+            switchFragment(frag_home);
+            return;
+        }
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle(getString(R.string.Warning));
         dialogBuilder.setMessage(getString(R.string.AskClose));

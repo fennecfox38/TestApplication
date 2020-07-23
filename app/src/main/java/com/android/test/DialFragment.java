@@ -13,9 +13,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class DialActivity extends AppCompatActivity{
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+public class DialFragment extends Fragment {
     private String strNum; //string which contains the number user put.
     private TextView txt_number;
     private ImageButton btn_dial,btn_sms, btn_erase;
@@ -23,16 +26,16 @@ public class DialActivity extends AppCompatActivity{
     //id array matched with each btn[]
     private int[] id_btn = {R.id.btn_0, R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4, R.id.btn_5, R.id.btn_6, R.id.btn_7, R.id.btn_8, R.id.btn_9, R.id.btn_star, R.id.btn_sharp};
 
-    @Override //Override onCreate
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dial);
+    DialFragment(){ }
+    @Nullable @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View rootView = inflater.inflate(R.layout.fragment_dial,container,false);
 
-//match View item by 'findViewById'
-        txt_number=findViewById(R.id.txt_number);
-        btn_dial=findViewById(R.id.btn_dial);
-        btn_sms=findViewById(R.id.btn_sms);
-        btn_erase= findViewById(R.id.btn_erase);
+        txt_number=rootView.findViewById(R.id.txt_number);
+        btn_dial=rootView.findViewById(R.id.btn_dial);
+        btn_sms=rootView.findViewById(R.id.btn_sms);
+        btn_erase=rootView.findViewById(R.id.btn_erase);
+
 
         txt_number.setText(strNum="");
         //EasterEgg TextWatcher
@@ -41,14 +44,14 @@ public class DialActivity extends AppCompatActivity{
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override public void afterTextChanged(Editable s) {
                 if((s.toString()).equals("*123456#")){
-                    ((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                            .inflate(R.layout.layout_container, (ViewGroup)findViewById(R.id.layout_container),true);
-                    Toast.makeText(getApplicationContext(),getString(R.string.EasterEgg),Toast.LENGTH_SHORT).show();
+                    ((LayoutInflater)(getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)))
+                            .inflate(R.layout.layout_container, (ViewGroup) rootView.findViewById(R.id.layout_container),true);
+                    Toast.makeText(getContext(),getString(R.string.EasterEgg),Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-//set OnClickListener & OnLongClickListener for btn.
+        //set OnClickListener & OnLongClickListener for btn.
         btn_dial.setOnClickListener(extActBtnListen);
         btn_dial.setOnLongClickListener(extActBtnLongListen);
         btn_sms.setOnClickListener(extActBtnListen);
@@ -69,7 +72,7 @@ public class DialActivity extends AppCompatActivity{
 //Declare Listener that defined as class
         NumBtnClickListener numbtnListener = new NumBtnClickListener();
         for(int i=0;i<12;++i){  //set Listener in loop
-            btn[i]=(Button)findViewById(id_btn[i]);
+            btn[i]=rootView.findViewById(id_btn[i]);
             btn[i].setOnClickListener(numbtnListener);
         }
 //set anonymous object Listener (designed for only '0' long pressed)
@@ -80,8 +83,9 @@ public class DialActivity extends AppCompatActivity{
                 return true; }
         });
 
-    }// The end of 'onCreate'
-
+        return rootView;
+        //return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
     //Anonymous Listener Class for External Action Button
     Button.OnClickListener extActBtnListen= new Button.OnClickListener(){
@@ -90,7 +94,7 @@ public class DialActivity extends AppCompatActivity{
             if(view.getId()==R.id.btn_dial){
                 toast="Dial to ";
                 parse="tel:";
-                intentConst=Intent.ACTION_DIAL; }
+                intentConst= Intent.ACTION_DIAL; }
             else if(view.getId()==R.id.btn_sms){
                 toast="SMS to ";
                 parse="smsto:";
@@ -98,7 +102,7 @@ public class DialActivity extends AppCompatActivity{
             else return;
             toast+=strNum;
             parse+=strNum.replaceAll("#","%23"); //replace"#" with "%23" (XML Special Character Parsing)
-            Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), toast, Toast.LENGTH_LONG).show();
             startActivity(new Intent(intentConst, Uri.parse(parse)));
         }
     };
@@ -120,7 +124,7 @@ public class DialActivity extends AppCompatActivity{
             else return false;
             toast+=strNum;
             parse+=strNum.replaceAll("#","%23");
-            Toast.makeText(getApplicationContext(),toast,Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),toast,Toast.LENGTH_LONG).show();
             Intent intent = new Intent(intentConst, Uri.parse(parse));
             if(intentConst==Intent.ACTION_SENDTO) intent.putExtra("sms_body","Test");
             startActivity(intent);
