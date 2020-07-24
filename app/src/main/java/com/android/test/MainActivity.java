@@ -4,16 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.test.PersonalData.PersonalDataActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar_main = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar_main); // Set ToolBar as AppBar
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null; // Show title and 'HomeAsUp' on Action Bar
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_hamburger);
@@ -49,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_credit: switchFragment(frag_credit); break;
                     case R.id.menu_pdf: switchFragment(frag_open_pdf); break;
                     case R.id.menu_setting: Toast.makeText(getApplicationContext(),getString(R.string.Setting),Toast.LENGTH_SHORT).show(); break;
+                    case R.id.menu_personal_data: startActivity(new Intent(getApplicationContext(), PersonalDataActivity.class)); break;
                 }
                 drawer_main.closeDrawer(GravityCompat.START);
                 return false;
@@ -75,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) { MainActivity.super.onBackPressed(); } });
         dialogBuilder.setNegativeButton(getString(R.string.Cancel), new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialog, int which) { return; }});
+            @Override public void onClick(DialogInterface dialog, int which) { }});
         dialogBuilder.show();
     }
 

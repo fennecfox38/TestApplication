@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import com.android.test.PersonalData.PersonalDataActivity;
@@ -19,19 +20,12 @@ public class HomeFragment extends Fragment {
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         rootView = inflater.inflate(R.layout.fragment_home,container,false);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.app_name));
-        (rootView.findViewById(R.id.btn_dataactivity)).setOnClickListener(btnOnClickListen);
+        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle(getString(R.string.app_name));
+        //actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_hamburger);
+        //actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_HOME_AS_UP);
+        rootView = inflater.inflate(R.layout.fragment_home,container,false);
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
-    Button.OnClickListener btnOnClickListen=new Button.OnClickListener(){
-        @Override public void onClick(View view){
-            Class<?> class_Activity;
-            switch(view.getId()){
-                case R.id.btn_dataactivity: class_Activity= PersonalDataActivity.class; break;
-                default: class_Activity=null; break; }
-            startActivity(new Intent(getContext(),class_Activity));
-        }
-    };
 }

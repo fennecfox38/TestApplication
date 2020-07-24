@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/menu_home"
-        android:icon="@drawable/ic_home"
-        android:title="@string/Home" />
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/group_nav_main_1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/Home" />
+    </group>
+    <group
+        android:id="@+id/group_nav_main_2"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/menu_dial"
             android:icon="@drawable/ic_phone"
@@ -21,5 +27,13 @@
             android:id="@+id/menu_setting"
             android:icon="@drawable/ic_setting"
             android:title="@string/Setting" />
+    </group>
+    <group
+        android:id="@+id/group_nav_main_3"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_personal_data"
+            android:icon="@drawable/ic_person"
+            android:title="@string/PersonalData" />
     </group>
 </menu>

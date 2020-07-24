@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 //import androidx.core.content.FileProvider;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import java.io.File;
@@ -29,6 +30,11 @@ public class OpenPDFFragment extends Fragment {
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle(getString(R.string.openPDF));
+        //actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        //actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_HOME_AS_UP);
+
         rootView = inflater.inflate(R.layout.fragment_open_pdf,container,false);
 
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().build()); // Unlimit restriction of access through file path directly.

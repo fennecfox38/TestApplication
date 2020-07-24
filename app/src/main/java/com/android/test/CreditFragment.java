@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 public class CreditFragment extends Fragment {
@@ -25,8 +26,12 @@ public class CreditFragment extends Fragment {
     CreditFragment(){ }
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle(getString(R.string.Credit));
+        //actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        //actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_HOME_AS_UP);
+
         rootView = inflater.inflate(R.layout.fragment_credit,container,false);
-        ((MainActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.Credit));
 
         txt_imageTitle=rootView.findViewById(R.id.txt_imageTitle);
         BitmapDrawable bitmap = (BitmapDrawable) (getResources().getDrawable(R.drawable.image_credit1));

@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">TestApplication</string>
     <string name="Home">Home</string>
-    <string name="welcome">Welcome! Below is menu</string>
+    <string name="Welcome">Welcome!</string>
+    <string name="nav_main_text">Welcome! Below is menu</string>
     <string name="PersonalData">Personal Data</string>
     <string name="Dial">Dial</string>
     <string name="openPDF">Open PDF</string>
