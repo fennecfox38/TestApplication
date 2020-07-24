@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class DialFragment extends Fragment {
+    private View rootView;
     private String strNum; //string which contains the number user put.
     private TextView txt_number;
     private ImageButton btn_dial,btn_sms, btn_erase;
@@ -29,13 +30,13 @@ public class DialFragment extends Fragment {
     DialFragment(){ }
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_dial,container,false);
+        rootView = inflater.inflate(R.layout.fragment_dial,container,false);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.Dial));
 
         txt_number=rootView.findViewById(R.id.txt_number);
         btn_dial=rootView.findViewById(R.id.btn_dial);
         btn_sms=rootView.findViewById(R.id.btn_sms);
         btn_erase=rootView.findViewById(R.id.btn_erase);
-
 
         txt_number.setText(strNum="");
         //EasterEgg TextWatcher

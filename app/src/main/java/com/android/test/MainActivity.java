@@ -19,7 +19,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer_main;
     private NavigationView nav_main;
-    private Fragment frag_home, frag_dial;
+    private Fragment frag_home, frag_dial, frag_credit, frag_open_pdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         frag_home = new HomeFragment();
         frag_dial = new DialFragment();
+        frag_credit = new CreditFragment();
+        frag_open_pdf = new OpenPDFFragment();
         FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
         fragTransaction.add(R.id.FrameLayout_main, frag_home);
         fragTransaction.commit();
@@ -44,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.menu_home: switchFragment(frag_home); break;
                     case R.id.menu_dial: switchFragment(frag_dial); break;
-                    case R.id.menu_credit: Toast.makeText(getApplicationContext(),getString(R.string.Credit),Toast.LENGTH_SHORT).show(); break;
+                    case R.id.menu_credit: switchFragment(frag_credit); break;
+                    case R.id.menu_pdf: switchFragment(frag_open_pdf); break;
                     case R.id.menu_setting: Toast.makeText(getApplicationContext(),getString(R.string.Setting),Toast.LENGTH_SHORT).show(); break;
                 }
                 drawer_main.closeDrawer(GravityCompat.START);

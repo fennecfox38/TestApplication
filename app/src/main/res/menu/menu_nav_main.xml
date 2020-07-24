@@ -14,6 +14,10 @@
             android:icon="@drawable/ic_person"
             android:title="@string/Credit" />
         <item
+            android:id="@+id/menu_pdf"
+            android:icon="@drawable/ic_document"
+            android:title="@string/openPDF" />
+        <item
             android:id="@+id/menu_setting"
             android:icon="@drawable/ic_setting"
             android:title="@string/Setting" />

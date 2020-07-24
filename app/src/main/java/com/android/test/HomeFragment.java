@@ -14,15 +14,14 @@ import androidx.fragment.app.Fragment;
 import com.android.test.PersonalData.PersonalDataActivity;
 
 public class HomeFragment extends Fragment {
+    View rootView;
     HomeFragment(){ }
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home,container,false);
+         rootView = inflater.inflate(R.layout.fragment_home,container,false);
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.app_name));
         (rootView.findViewById(R.id.btn_dataactivity)).setOnClickListener(btnOnClickListen);
-        (rootView.findViewById(R.id.btn_openPDFactivity)).setOnClickListener(btnOnClickListen);
-        (rootView.findViewById(R.id.btn_creditactivity)).setOnClickListener(btnOnClickListen);
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -31,8 +30,6 @@ public class HomeFragment extends Fragment {
             Class<?> class_Activity;
             switch(view.getId()){
                 case R.id.btn_dataactivity: class_Activity= PersonalDataActivity.class; break;
-                case R.id.btn_openPDFactivity: class_Activity= OpenPDFActivity.class; break;
-                case R.id.btn_creditactivity: class_Activity= CreditActivity.class; break;
                 default: class_Activity=null; break; }
             startActivity(new Intent(getContext(),class_Activity));
         }
