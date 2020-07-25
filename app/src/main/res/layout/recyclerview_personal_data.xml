@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+    <!--app:cardBackgroundColor="@color/cardview_light_background"-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <ImageView
+            android:id="@+id/ic_person"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_person"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="Person Image" />
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2.5dp"
+            android:textSize="20sp"
+            android:text="@string/Name"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toTopOf="@+id/ic_person"
+            app:layout_constraintBottom_toTopOf="@+id/item_birthday"
+            app:layout_constraintStart_toEndOf="@+id/ic_person"
+            app:layout_constraintEnd_toStartOf="@+id/item_age"/>
+
+
+        <TextView
+            android:id="@+id/item_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2.5dp"
+            android:textSize="15sp"
+            android:text="@string/Age"
+            app:layout_constraintBaseline_toBaselineOf="@+id/item_name"
+            app:layout_constraintStart_toEndOf="@+id/item_name"
+            app:layout_constraintEnd_toStartOf="@+id/item_sex"/>
+
+        <TextView
+            android:id="@+id/item_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2.5dp"
+            android:textSize="15sp"
+            android:text="@string/Sex"
+            app:layout_constraintBaseline_toBaselineOf="@+id/item_age"
+            app:layout_constraintStart_toEndOf="@+id/item_age"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/item_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2.5dp"
+            android:textSize="15sp"
+            android:text="@string/Birthday"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toBottomOf="@+id/item_name"
+            app:layout_constraintBottom_toBottomOf="@+id/ic_person"
+            app:layout_constraintStart_toEndOf="@+id/ic_person"
+            app:layout_constraintEnd_toStartOf="@+id/item_marriage"/>
+        <TextView
+            android:id="@+id/item_marriage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2.5dp"
+            android:textSize="15sp"
+            android:text="@string/Marriage"
+            app:layout_constraintBaseline_toBaselineOf="@+id/item_birthday"
+            app:layout_constraintStart_toEndOf="@+id/item_birthday"
+            app:layout_constraintEnd_toStartOf="@+id/item_children"/>
+        <TextView
+            android:id="@+id/item_children"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2.5dp"
+            android:textSize="15sp"
+            android:text="@string/HaveChildren"
+            app:layout_constraintBaseline_toBaselineOf="@+id/item_birthday"
+            app:layout_constraintStart_toEndOf="@+id/item_marriage"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

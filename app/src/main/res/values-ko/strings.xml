@@ -42,6 +42,7 @@
     <string name="Share">공유</string>
     <string name="Edit">수정</string>
     <string name="Delete">삭제</string>
+    <string name="Refreshed">성공적으로 새로고침 되었습니다.</string>
     <string name="PersonAdded">성공적으로 추가 되었습니다.</string>
     <string name="PersonEdited">성공적으로 수정 되었습니다.</string>
     <string name="PersonDeleted">성공적으로 삭제 되었습니다.</string>
@@ -53,9 +54,21 @@
     <string name="NoPDFViewer">사용가능한 PDF 뷰어가 없습니다.</string>
     <string name="FileNotExist">존재하지 않는 파일입니다.</string>
     <string name="credit1">사막여우</string>
-    <string name="credit2">깜이</string>
     <string name="switchImage">전환</string>
     <string name="WebPage">웹페이지</string>
     <string name="Email">전자우편</string>
     <string name="Location">위치</string>
+    <string name="Call">전화</string>
+    <string name="SMS">단문 메시지</string>
+    <string name="Recipient">받는 사람</string>
+    <string name="smsbody">문자 메시지</string>
+    <string name="WarnCallPermissionDenied">권한 승인 없이 전화 발신을 할 수 없습니다.</string>
+    <string name="WarnSMSPermissionDenied">권한 승인 없이 문자 발신을 할 수 없습니다.</string>
+    <string name="WarnPermissionDenied">권한 승인 없이 동작을 수행할 수 없습니다.</string>
+    <string name="GrantPermissionOnSetting">설정에서 권한을 승인하십시오.</string>
+    <string name="SentFromTestApplication">\'테스트어플리케이션\'에서 보냈음.</string>
+    <string name="AskGrantSMSPermission">문자 메시지를 보내기 위하여 권한을 허락해주십시오.</string>
+    <string name="Request">요청</string>
+    <string name="WarnRecipientEmpty">수신 번호를 입력하십시오.</string>
+    <string name="WarnSMSBodyEmpty">문자 메시지 내용이 비어있습니다!</string>
 </resources>

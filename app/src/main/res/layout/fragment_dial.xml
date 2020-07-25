@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground">
+    android:background="?android:attr/colorBackground"
+    tools:context=".CreditFragment">
     
     <LinearLayout
         android:id="@+id/layout_container"
@@ -21,34 +22,32 @@
 
     </LinearLayout>
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_erase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
         android:focusableInTouchMode="true"
-        android:src="@drawable/ic_backspace"
-        android:background="?android:attr/colorBackground"
+        android:background="@drawable/ic_backspace"
         app:layout_constrainedWidth="true"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintTop_toBottomOf="@+id/layout_container"
         app:layout_constraintBottom_toTopOf="@+id/layout_table"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintLeft_toRightOf="@+id/txt_number"
+        app:layout_constraintRight_toRightOf="parent"/>
     <TextView
         android:id="@+id/txt_number"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
         android:textSize="30sp"
-        android:textColor="?android:attr/colorAccent"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textColorHighlight="?android:attr/colorAccent"
         android:text=""
         android:background="?android:attr/colorBackground"
         app:layout_constrainedWidth="true"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintTop_toTopOf="@+id/btn_erase"
         app:layout_constraintBottom_toBottomOf="@+id/btn_erase"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_erase"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btn_erase"/>
 
     <TableLayout
         android:id="@+id/layout_table"
@@ -70,7 +69,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="1"
                 style="?android:attr/buttonBarButtonStyle"/>
             <Button
@@ -78,7 +78,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="2"
                 style="?android:attr/buttonBarButtonStyle"/>
             <Button
@@ -86,7 +87,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="3"
                 style="?android:attr/buttonBarButtonStyle"/>
         </TableRow>
@@ -99,7 +101,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="4"
                 style="?android:attr/buttonBarButtonStyle"/>
             <Button
@@ -107,7 +110,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="5"
                 style="?android:attr/buttonBarButtonStyle"/>
             <Button
@@ -115,7 +119,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="6"
                 style="?android:attr/buttonBarButtonStyle"/>
         </TableRow>
@@ -127,7 +132,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="7"
                 style="?android:attr/buttonBarButtonStyle"/>
             <Button
@@ -135,7 +141,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="8"
                 style="?android:attr/buttonBarButtonStyle"/>
             <Button
@@ -143,7 +150,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="9"
                 style="?android:attr/buttonBarButtonStyle"/>
         </TableRow>
@@ -155,7 +163,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="*"
                 style="?android:attr/buttonBarButtonStyle"/>
             <Button
@@ -163,7 +172,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="0 (+)"
                 style="?android:attr/buttonBarButtonStyle"/>
             <Button
@@ -171,34 +181,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:textColor="?android:attr/colorAccent"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHighlight="?android:attr/colorAccent"
                 android:text="#"
                 style="?android:attr/buttonBarButtonStyle"/>
         </TableRow>
     </TableLayout>
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_dial"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:focusableInTouchMode="true"
-        android:src="@drawable/ic_phone"
-        android:background="?android:attr/colorBackground"
+        android:background="@drawable/ic_phone"
         app:layout_constraintTop_toTopOf="@+id/btn_sms"
         app:layout_constraintBottom_toBottomOf="@+id/btn_sms"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_sms"/>
-    <ImageButton
+    <Button
         android:id="@+id/btn_sms"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:focusableInTouchMode="true"
-        android:src="@drawable/ic_messages"
-        android:background="?android:attr/colorBackground"
+        android:background="@drawable/ic_message"
         app:layout_constraintTop_toBottomOf="@+id/layout_table"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_dial"

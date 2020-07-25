@@ -47,6 +47,7 @@
     <string name="Share">Share</string>
     <string name="Edit">Edit</string>
     <string name="Delete">Delete</string>
+    <string name="Refreshed">Refreshed Successfully.</string>
     <string name="PersonAdded">Person Added Successfully.</string>
     <string name="PersonEdited">Person Edited Successfully.</string>
     <string name="PersonDeleted">Person Deleted Successfully.</string>
@@ -58,9 +59,22 @@
     <string name="NoPDFViewer">No PDF Viewer available</string>
     <string name="FileNotExist">That file does not exist.</string>
     <string name="credit1">Fennec Fox</string>
-    <string name="credit2">Ggam-i</string>
+    <string name="credit2" translatable="false" >깜이</string>
     <string name="switchImage">Switch</string>
     <string name="WebPage">WebPage</string>
     <string name="Email">Email</string>
     <string name="Location">Location</string>
+    <string name="Call">Call</string>
+    <string name="SMS">SMS</string>
+    <string name="Recipient">Recipient</string>
+    <string name="smsbody">Text Message</string>
+    <string name="WarnCallPermissionDenied">Cannot call without permission grant.</string>
+    <string name="WarnSMSPermissionDenied">Cannot send SMS without permission grant.</string>
+    <string name="WarnPermissionDenied">Cannot do action without permission grant.</string>
+    <string name="GrantPermissionOnSetting">Please grant permission on settings.</string>
+    <string name="SentFromTestApplication">Sent from \TestApplication\'.</string>
+    <string name="AskGrantSMSPermission">Please grant permission to send message.</string>
+    <string name="Request">Request</string>
+    <string name="WarnRecipientEmpty">Please fill out the recipient.</string>
+    <string name="WarnSMSBodyEmpty">SMS Body is empty!</string>
 </resources>

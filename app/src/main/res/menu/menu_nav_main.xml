@@ -16,6 +16,10 @@
             android:icon="@drawable/ic_phone"
             android:title="@string/Dial" />
         <item
+            android:id="@+id/menu_sms"
+            android:icon="@drawable/ic_message"
+            android:title="@string/SMS" />
+        <item
             android:id="@+id/menu_credit"
             android:icon="@drawable/ic_person"
             android:title="@string/Credit" />

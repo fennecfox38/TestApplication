@@ -19,7 +19,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.util.TypedValue;
@@ -41,11 +40,8 @@ import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +63,16 @@ public class PersonalDataActivity extends AppCompatActivity {
         // Floating Action Button adds person.
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) { call_RegisterData_Add(); }
+        });
+
+        final SwipeRefreshLayout refreshLayout = findViewById(R.id.refresh_layout_personal_data);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override public void run() {
+                        Snackbar.make(refreshLayout,getString(R.string.Refreshed),Snackbar.LENGTH_SHORT).show();
+                        saveList(); loadList();refreshLayout.setRefreshing(false);
+                    }}, 500); }
         });
 
         RecyclerView recyclerView = findViewById(R.id.recycler);
@@ -110,7 +116,7 @@ public class PersonalDataActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==RESULT_CANCELED) {
-            Snackbar.make(findViewById(R.id.content_personal_data), getString(R.string.Canceled), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(R.id.refresh_layout_personal_data), getString(R.string.Canceled), Snackbar.LENGTH_SHORT).show();
             return;
         }
         assert data != null;
@@ -165,7 +171,7 @@ public class PersonalDataActivity extends AppCompatActivity {
     }
     protected void deletePersonItem(int position){
         final PersonalData backup = personAdapter.deletePerson(position);
-        Snackbar.make(findViewById(R.id.content_personal_data), getString(R.string.PersonDeleted), Snackbar.LENGTH_SHORT)
+        Snackbar.make(findViewById(R.id.refresh_layout_personal_data), getString(R.string.PersonDeleted), Snackbar.LENGTH_SHORT)
                 .setAction(getString(R.string.Undo), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) { personAdapter.addPerson(backup); }
@@ -211,7 +217,7 @@ public class PersonalDataActivity extends AppCompatActivity {
     }
     protected void after_RegisterData_Add(final PersonalData person){
         personAdapter.addPerson(person);
-        Snackbar.make(findViewById(R.id.content_personal_data), getString(R.string.PersonAdded), Snackbar.LENGTH_SHORT)
+        Snackbar.make(findViewById(R.id.refresh_layout_personal_data), getString(R.string.PersonAdded), Snackbar.LENGTH_SHORT)
                 .setAction(getString(R.string.Undo), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) { personAdapter.deletePerson(person); }
@@ -219,7 +225,7 @@ public class PersonalDataActivity extends AppCompatActivity {
     }
     protected void after_RegisterData_Edit(PersonalData person){
         final PersonalData original = personAdapter.editPerson(adapterPosition,person);
-        Snackbar.make(findViewById(R.id.content_personal_data), getString(R.string.PersonEdited), Snackbar.LENGTH_SHORT)
+        Snackbar.make(findViewById(R.id.refresh_layout_personal_data), getString(R.string.PersonEdited), Snackbar.LENGTH_SHORT)
                 .setAction(getString(R.string.Undo), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) { personAdapter.editPerson(adapterPosition, original);}

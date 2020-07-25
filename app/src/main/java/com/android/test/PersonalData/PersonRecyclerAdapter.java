@@ -72,7 +72,7 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
         context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.recyclerview_item,parent,false);
+        View view = inflater.inflate(R.layout.recyclerview_personal_data,parent,false);
         return (new PersonRecyclerAdapter.ViewHolder(view));
     }
 

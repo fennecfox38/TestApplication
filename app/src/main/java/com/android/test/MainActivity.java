@@ -22,7 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer_main;
     private NavigationView nav_main;
-    private Fragment frag_home, frag_dial, frag_credit, frag_open_pdf;
+    private Fragment frag_home, frag_dial, frag_sms, frag_credit, frag_open_pdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         frag_home = new HomeFragment();
         frag_dial = new DialFragment();
+        frag_sms = new SMSFragment();
         frag_credit = new CreditFragment();
         frag_open_pdf = new OpenPDFFragment();
         FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
@@ -49,10 +50,11 @@ public class MainActivity extends AppCompatActivity {
         nav_main.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.menu_home: switchFragment(frag_home); break;
-                    case R.id.menu_dial: switchFragment(frag_dial); break;
-                    case R.id.menu_credit: switchFragment(frag_credit); break;
-                    case R.id.menu_pdf: switchFragment(frag_open_pdf); break;
+                    case R.id.menu_home: switchFragmentTo(frag_home); break;
+                    case R.id.menu_dial: switchFragmentTo(frag_dial); break;
+                    case R.id.menu_sms: switchFragmentTo(frag_sms); break;
+                    case R.id.menu_credit: switchFragmentTo(frag_credit); break;
+                    case R.id.menu_pdf: switchFragmentTo(frag_open_pdf); break;
                     case R.id.menu_setting: Toast.makeText(getApplicationContext(),getString(R.string.Setting),Toast.LENGTH_SHORT).show(); break;
                     case R.id.menu_personal_data: startActivity(new Intent(getApplicationContext(), PersonalDataActivity.class)); break;
                 }
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    protected void switchFragment(Fragment frag){
+    protected void switchFragmentTo(Fragment frag){
         FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
         fragTransaction.replace(R.id.FrameLayout_main,frag);
         fragTransaction.commit();
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     @Override public void onBackPressed() {
         if(drawer_main.isDrawerOpen(GravityCompat.START)) { drawer_main.closeDrawers(); return; }
         if(getSupportFragmentManager().findFragmentById(R.id.FrameLayout_main)!=frag_home){
-            switchFragment(frag_home);
+            switchFragmentTo(frag_home);
             return;
         }
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);

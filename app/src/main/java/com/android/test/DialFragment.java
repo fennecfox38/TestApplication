@@ -1,29 +1,40 @@
 package com.android.test;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
+
 public class DialFragment extends Fragment {
+    private DangerousPermission permission_Call;
+    private MainActivity activity;
+    private Context context;
     private View rootView;
     private String strNum; //string which contains the number user put.
     private TextView txt_number;
-    private ImageButton btn_dial,btn_sms, btn_erase;
     private Button[] btn= new Button[12]; //btn[10] for *, [11] for #
     //id array matched with each btn[]
     private int[] id_btn = {R.id.btn_0, R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4, R.id.btn_5, R.id.btn_6, R.id.btn_7, R.id.btn_8, R.id.btn_9, R.id.btn_star, R.id.btn_sharp};
@@ -31,7 +42,10 @@ public class DialFragment extends Fragment {
     DialFragment(){ }
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        activity = (MainActivity)getActivity();
+        context = getContext();
+        ActionBar actionBar = activity.getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle(getString(R.string.Dial));
         //actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
         //actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_HOME_AS_UP);
@@ -39,9 +53,6 @@ public class DialFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_dial,container,false);
 
         txt_number=rootView.findViewById(R.id.txt_number);
-        btn_dial=rootView.findViewById(R.id.btn_dial);
-        btn_sms=rootView.findViewById(R.id.btn_sms);
-        btn_erase=rootView.findViewById(R.id.btn_erase);
 
         txt_number.setText(strNum="");
         //EasterEgg TextWatcher
@@ -50,36 +61,29 @@ public class DialFragment extends Fragment {
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override public void afterTextChanged(Editable s) {
                 if((s.toString()).equals("*123456#")){
-                    ((LayoutInflater)(getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)))
+                    ((LayoutInflater)(activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE)))
                             .inflate(R.layout.layout_container, (ViewGroup) rootView.findViewById(R.id.layout_container),true);
-                    Toast.makeText(getContext(),getString(R.string.EasterEgg),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,getString(R.string.EasterEgg),Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         //set OnClickListener & OnLongClickListener for btn.
-        btn_dial.setOnClickListener(extActBtnListen);
-        btn_dial.setOnLongClickListener(extActBtnLongListen);
-        btn_sms.setOnClickListener(extActBtnListen);
-        btn_sms.setOnLongClickListener(extActBtnLongListen);
-        btn_erase.setOnClickListener(new Button.OnClickListener(){
-            @Override public void onClick(View v){
-                if(strNum.length()==0) return;
-                strNum=strNum.substring(0,strNum.length()-1);
-                txt_number.setText(strNum);
-            }
-        });
-        btn_erase.setOnLongClickListener(new Button.OnLongClickListener(){
-            @Override public boolean onLongClick(View view){
-                txt_number.setText(strNum="");
-                return true; }
-        });
 
-//Declare Listener that defined as class
-        NumBtnClickListener numbtnListener = new NumBtnClickListener();
+        Button btn_dial=rootView.findViewById(R.id.btn_dial);
+        Button btn_sms=rootView.findViewById(R.id.btn_sms);
+        Button btn_erase=rootView.findViewById(R.id.btn_erase);
+        btn_dial.setOnClickListener(funcBtnListen);
+        btn_sms.setOnClickListener(funcBtnListen);
+        btn_erase.setOnClickListener(funcBtnListen);
+        btn_dial.setOnLongClickListener(funcBtnLongListen);
+        btn_sms.setOnLongClickListener(funcBtnLongListen);
+        btn_erase.setOnLongClickListener(funcBtnLongListen);
+
+//set OnClickListener for Number Button
         for(int i=0;i<12;++i){  //set Listener in loop
             btn[i]=rootView.findViewById(id_btn[i]);
-            btn[i].setOnClickListener(numbtnListener);
+            btn[i].setOnClickListener(numBtnListen);
         }
 //set anonymous object Listener (designed for only '0' long pressed)
         btn[0].setOnLongClickListener(new Button.OnLongClickListener(){
@@ -89,59 +93,46 @@ public class DialFragment extends Fragment {
                 return true; }
         });
 
+        permission_Call = new DangerousPermission(this,context);
+        permission_Call.setPermissionList(new String[]{Manifest.permission.CALL_PHONE});
+        permission_Call.setAction(new Runnable() {
+            @Override public void run() {
+                String parse="tel:"+strNum.replaceAll("#","%23");
+                Toast.makeText(context,"Call to "+strNum,Toast.LENGTH_LONG).show();
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(parse)));
+            }
+        });
+        permission_Call.setDialog(getString(R.string.Warning),getString(R.string.WarnCallPermissionDenied),
+                getString(R.string.WarnCallPermissionDenied),getString(R.string.GrantPermissionOnSetting));
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    //Anonymous Listener Class for External Action Button
-    Button.OnClickListener extActBtnListen= new Button.OnClickListener(){
+    //Anonymous Listener Class for Function Button
+    private Button.OnClickListener funcBtnListen = new Button.OnClickListener(){
         @Override public void onClick(View view){
-            String toast=null,parse=null,intentConst=null;
-            if(view.getId()==R.id.btn_dial){
-                toast="Dial to ";
-                parse="tel:";
-                intentConst= Intent.ACTION_DIAL; }
-            else if(view.getId()==R.id.btn_sms){
-                toast="SMS to ";
-                parse="smsto:";
-                intentConst=Intent.ACTION_SENDTO; }
-            else return;
-            toast+=strNum;
-            parse+=strNum.replaceAll("#","%23"); //replace"#" with "%23" (XML Special Character Parsing)
-            Toast.makeText(getContext(), toast, Toast.LENGTH_LONG).show();
-            startActivity(new Intent(intentConst, Uri.parse(parse)));
-        }
+            switch (view.getId()){
+                case R.id.btn_dial: permission_Call.tryAction(); break;//call(); break;
+                case R.id.btn_sms: redirectSMS(); break;
+                case R.id.btn_erase:
+                    if(strNum.length()==0) return;
+                    strNum=strNum.substring(0,strNum.length()-1);
+                    txt_number.setText(strNum); break;
+                default: break; } }
     };
-    //Anonymous LongClickListener Class for External Action Button
-    Button.OnLongClickListener extActBtnLongListen = new Button.OnLongClickListener(){
-        @Override
-        public boolean onLongClick(View view){
-            String toast,parse,intentConst;
-            if(view.getId()==R.id.btn_dial){
-                toast="Call to ";
-                parse="tel:";
-                intentConst=Intent.ACTION_CALL;
-            }
-            else if(view.getId()==R.id.btn_sms){
-                toast="SMS to ";
-                parse="smsto:";
-                intentConst=Intent.ACTION_SENDTO;
-            }
-            else return false;
-            toast+=strNum;
-            parse+=strNum.replaceAll("#","%23");
-            Toast.makeText(getContext(),toast,Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(intentConst, Uri.parse(parse));
-            if(intentConst==Intent.ACTION_SENDTO) intent.putExtra("sms_body","Test");
-            startActivity(intent);
-            return true;
-        }
+    //Anonymous LongClickListener Class for Function Button
+    private Button.OnLongClickListener funcBtnLongListen = new Button.OnLongClickListener(){
+        @Override public boolean onLongClick(View view){
+            switch (view.getId()){
+                case R.id.btn_dial: permission_Call.tryAction(); break;//call(); break;
+                case R.id.btn_sms: redirectSMS(); break;
+                case R.id.btn_erase: txt_number.setText(strNum=""); break;
+                default: return false;
+            }return true; }
     };
 
-    //explicit Listener Class for Number Button
-    class NumBtnClickListener implements Button.OnClickListener{
-        @Override
-        public void onClick(View view){
+    private Button.OnClickListener numBtnListen = new Button.OnClickListener(){
+        @Override public void onClick(View view){
             if(strNum.length()>15) return;
             for(int i=0;i<12;++i)
                 if(view.getId()==id_btn[i]){
@@ -151,5 +142,34 @@ public class DialFragment extends Fragment {
                 }
             txt_number.setText(strNum);
         }
+    };
+
+    private void redirectSMS(){
+        Fragment frag_sms = new SMSFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("recipient",strNum.replaceAll("#","%23"));
+        bundle.putString("smsbody",getString(R.string.SentFromTestApplication));
+        frag_sms.setArguments(bundle);
+        activity.switchFragmentTo(frag_sms);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        /*if(requestCode!= REQUEST_CODE_PERMISSION_CALL) return;
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) { intentCall();}
+        else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.Warning);
+            builder.setMessage(R.string.WarnCallPermissionDenied);
+            builder.setPositiveButton(R.string.Request, new DialogInterface.OnClickListener(){
+                @Override public void onClick(DialogInterface dialog, int which) { requestCallPermission(); }
+            });
+            builder.setNegativeButton(R.string.Cancel,new DialogInterface.OnClickListener(){
+                @Override public void onClick(DialogInterface dialog, int which) { }
+            });
+            builder.show();
+        }*/
+        permission_Call.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
