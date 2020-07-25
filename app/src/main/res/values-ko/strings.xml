@@ -32,11 +32,13 @@
     <string name="Single">미혼</string>
     <string name="Married">기혼</string>
     <string name="Divorced">이혼</string>
+    <string name="Children">자녀</string>
     <string name="HaveChildren">자녀있음</string>
     <string name="HaveNoChildren">자녀없음</string>
     <string name="Submit">제출</string>
     <string name="Clear">초기화</string>
     <string name="title_activity_personal_data">인적사항</string>
+    <string name="Sort">정렬</string>
     <string name="Import">불러오기</string>
     <string name="Export">내보내기</string>
     <string name="Share">공유</string>

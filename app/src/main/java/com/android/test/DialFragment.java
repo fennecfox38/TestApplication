@@ -21,12 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
-import java.util.ArrayList;
-
 
 public class DialFragment extends Fragment {
     private DangerousPermission permission_Call;
@@ -155,20 +150,6 @@ public class DialFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        /*if(requestCode!= REQUEST_CODE_PERMISSION_CALL) return;
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) { intentCall();}
-        else{
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(R.string.Warning);
-            builder.setMessage(R.string.WarnCallPermissionDenied);
-            builder.setPositiveButton(R.string.Request, new DialogInterface.OnClickListener(){
-                @Override public void onClick(DialogInterface dialog, int which) { requestCallPermission(); }
-            });
-            builder.setNegativeButton(R.string.Cancel,new DialogInterface.OnClickListener(){
-                @Override public void onClick(DialogInterface dialog, int which) { }
-            });
-            builder.show();
-        }*/
         permission_Call.onRequestPermissionsResult(requestCode,permissions,grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }

@@ -15,6 +15,11 @@
         app:showAsAction="always"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
     <item
+        android:id="@+id/menu_sort"
+        android:title="Sort"
+        android:icon="@drawable/ic_sort"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/menu_import"
         android:title="@string/Import"
         app:showAsAction="never"/>

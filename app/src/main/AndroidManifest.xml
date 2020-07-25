@@ -28,7 +28,7 @@
         <activity
             android:name=".PersonalData.PersonalDataActivity"
             android:label="@string/title_activity_personal_data"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".PersonalData.RegisterDataActivity"
             android:label="@string/RegisterDataActivityTitle"

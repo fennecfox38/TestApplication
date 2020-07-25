@@ -48,6 +48,7 @@ import java.util.List;
 public class PersonalDataActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_ADD = 101, REQUEST_CODE_EDIT=102;
     private int adapterPosition;
+    private SearchView searchView;
     private PersonRecyclerAdapter personAdapter;
     private PersonalDataDBHelper dbHelper;
 
@@ -136,12 +137,23 @@ public class PersonalDataActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                personAdapter.restoreListFromBackup();
+                personAdapter.queryPerson(query,getResources());
                 Toast.makeText(getApplicationContext(),"query: "+query,Toast.LENGTH_SHORT).show();
-
-
                 return false;
             }
-            @Override public boolean onQueryTextChange(String newText) { return false; }
+            @Override public boolean onQueryTextChange(String newText) {
+                personAdapter.restoreListFromBackup();
+                if(newText.length()==0) return false;
+                personAdapter.queryPerson(newText,getResources());
+                return false; }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override public boolean onClose() {
+                personAdapter.restoreListFromBackup();
+                Toast.makeText(getApplicationContext(),"SearchView Closed",Toast.LENGTH_SHORT).show();
+                return false;
+            }
         });
 
         return super.onCreateOptionsMenu(menu);
@@ -150,7 +162,7 @@ public class PersonalDataActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case android.R.id.home: finish(); break;
             case R.id.menu_add: call_RegisterData_Add(); break;
-            case R.id.menu_search: break;
+            case R.id.menu_sort: sortOption(); break;
             case R.id.menu_import: action_import(); break;
             case R.id.menu_export: action_export(); break;
             case R.id.menu_share: action_share(); break;
@@ -177,6 +189,11 @@ public class PersonalDataActivity extends AppCompatActivity {
                     public void onClick(View v) { personAdapter.addPerson(backup); }
                 }).show();
     }
+
+    protected void sortOption(){
+        Toast.makeText(getApplicationContext(),getString(R.string.Sort),Toast.LENGTH_SHORT).show();
+    }
+
     protected void action_import(){
         Toast.makeText(getApplicationContext(),getString(R.string.Import),Toast.LENGTH_SHORT).show();
     }
@@ -234,13 +251,10 @@ public class PersonalDataActivity extends AppCompatActivity {
 
     protected void loadList(){
         ArrayList<PersonalData> list = new ArrayList<>();
-
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(DBContract.SQL_SELECT,null);
-
-        PersonalData person;
+        Cursor cursor= db.rawQuery(DBContract.SQL_SELECT,null);
         for(boolean haveItem = cursor.moveToFirst(); haveItem; haveItem=cursor.moveToNext()){
-            person = new PersonalData();
+            PersonalData person = new PersonalData();
             person.setName(cursor.getString(cursor.getColumnIndex(DBContract.COLUMN_NAME)));
             person.setPassword(cursor.getString(cursor.getColumnIndex(DBContract.COLUMN_PASSWORD)));
             person.birthday.setDate(cursor.getString(cursor.getColumnIndex(DBContract.COLUMN_BIRTHDAY)));
@@ -252,7 +266,6 @@ public class PersonalDataActivity extends AppCompatActivity {
         }
         cursor.close();
         db.close();
-
         personAdapter.setList(list);
     }
 
@@ -274,12 +287,10 @@ public class PersonalDataActivity extends AppCompatActivity {
             cvList.add(cv);
         }
         try {
-            db.beginTransaction();
-            //clear the table first
+            db.beginTransaction();                      //clear the table first
             db.delete (DBContract.TABLE_NAME,null,null);
             //go through the list and add one by one
-            for(ContentValues c:cvList)
-                db.insert(DBContract.TABLE_NAME, null, c);
+            for(ContentValues c:cvList) db.insert(DBContract.TABLE_NAME, null, c);
             db.setTransactionSuccessful();
         } catch (SQLException e) {
             Log.d("saveList", "fail to save list to db. (SQLException e)");
@@ -287,6 +298,7 @@ public class PersonalDataActivity extends AppCompatActivity {
         finally { db.endTransaction(); }
         db.close();
     }
+
     private int getColorAccent(Context context){
         TypedValue typedValue = new TypedValue();
         context.getTheme().resolveAttribute(android.R.attr.colorAccent, typedValue, true);

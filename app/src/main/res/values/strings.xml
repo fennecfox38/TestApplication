@@ -15,8 +15,8 @@
     <string name="RegisterDataActivityTitle">Register Personnel</string>
     <string name="SearchHint">Type keyword to search</string>
     <string name="PresetPerson">You can load preset person from below.</string>
-    <string name="Person1" translatable="false">John</string>
-    <string name="Person2" translatable="false">Sally</string>
+    <string name="Person1" translatable="false">Joe Snuffy</string>
+    <string name="Person2" translatable="false">Paige Cooley</string>
     <string name="Person3" translatable="false">Shadow</string>
     <string name="Person4" translatable="false">홍길동</string>
     <string name="Person5" translatable="false">김영희</string>
@@ -37,11 +37,13 @@
     <string name="Single">Single</string>
     <string name="Married">Married</string>
     <string name="Divorced">Divorced</string>
+    <string name="Children">Children</string>
     <string name="HaveChildren">Have Children</string>
     <string name="HaveNoChildren">Have No Children</string>
     <string name="Submit">Submit</string>
     <string name="Clear">Clear</string>
     <string name="title_activity_personal_data">PersonalData</string>
+    <string name="Sort">Sort</string>
     <string name="Import">Import</string>
     <string name="Export">Export</string>
     <string name="Share">Share</string>

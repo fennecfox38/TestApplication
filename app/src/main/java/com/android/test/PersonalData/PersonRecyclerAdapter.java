@@ -1,6 +1,7 @@
 package com.android.test.PersonalData;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.test.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAdapter.ViewHolder> {
-    private ArrayList<PersonalData> list;
+    private ArrayList<PersonalData> list, backup;
     private Context context;
 
     public interface OnItemClickListener{ void onItemClick(View view, int position); }
@@ -62,10 +64,10 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
             });
         }
     }
-    PersonRecyclerAdapter(){list= new ArrayList<>();}
-    PersonRecyclerAdapter(ArrayList<PersonalData> list){ this.list=list; }
-    public void setList(ArrayList<PersonalData> list){ this.list=list; }
-    public ArrayList<PersonalData> getList(){ return list; }
+    PersonRecyclerAdapter(){list= new ArrayList<>(); backup=null; }
+    PersonRecyclerAdapter(ArrayList<PersonalData> list){ this.list=list; backup=null; }
+    public void setList(ArrayList<PersonalData> list){ this.list=list; Collections.sort(list); }
+    public ArrayList<PersonalData> getList(){ Collections.sort(list); return list; }
 
     @NonNull @Override
     public PersonRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -91,11 +93,13 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
 
     public void addPerson(PersonalData person){
         list.add(person);
+        Collections.sort(list);
         notifyItemInserted(list.indexOf(person));
     }
     public PersonalData deletePerson(int index){
         PersonalData backup = list.get(index);
         list.remove(index);
+        Collections.sort(list);
         notifyItemRemoved(index);
         return backup;
     }
@@ -104,13 +108,26 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
     public PersonalData editPerson(int index, PersonalData person){
         PersonalData original = list.get(index);
         list.set(index,person);
+        Collections.sort(list);
         notifyItemChanged(index);
         return original;
     }
 
-    /*public ArrayList<PersonalData> queryPerson(String query){
+    public void queryPerson(String query, Resources resources){
         ArrayList<PersonalData> answer = new ArrayList<>();
+        backup = new ArrayList<>();
+        for(PersonalData pd : list)
+            if(pd.query(query,resources)) answer.add(pd);
+            else backup.add(pd);
+        list=answer;
+        notifyDataSetChanged();
+    }
 
-        return answer;
-    }*/
+    public void restoreListFromBackup(){
+        if(backup == null) return;
+        list.addAll(backup);
+        backup=null;
+        Collections.sort(list);
+        notifyDataSetChanged();
+    }
 }

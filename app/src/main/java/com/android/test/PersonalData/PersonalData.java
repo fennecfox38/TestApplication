@@ -21,7 +21,7 @@ import com.android.test.R;
 
 import java.util.Calendar;
 
-public class PersonalData implements Parcelable{ // class 'PersonalData' is implemented from 'android.os.Parcelable'
+public class PersonalData implements Parcelable, Comparable  { // class 'PersonalData' is implemented from 'android.os.Parcelable'
     private String name, password;
     private int age;
     private Sex sex;
@@ -109,6 +109,16 @@ public class PersonalData implements Parcelable{ // class 'PersonalData' is impl
         return age;
     }
 
+    @Override public int compareTo(Object t) {
+        PersonalData pd=(PersonalData)t;
+        int res= this.name.compareTo(pd.name);
+        if(res!=0) return res;
+        else if((res=this.birthday.getDate().compareTo(pd.birthday.getDate()))!=0) return res;
+        else if((res=this.sex.ordinal()-pd.sex.ordinal())!=0) return res;
+        else if((res=this.marriage.ordinal()-pd.marriage.ordinal())!=0) return res;
+        else return ((this.children?1:0)-(pd.children?1:0));
+    }
+
     protected class Date {
         private int year, month, day;
         Date(){ // Default void parameter constructor just set date as today.
@@ -189,5 +199,18 @@ public class PersonalData implements Parcelable{ // class 'PersonalData' is impl
         txt+=resources.getString(R.string.Marriage)+": "+resources.getString(marriage.getStrId())+"\n";
         txt+=resources.getString(R.string.HaveChildren)+": "+resources.getString((children?R.string.HaveChildren:R.string.HaveNoChildren))+"\n";
         return txt;
+    }
+
+    public boolean query(String query,Resources resources){
+        if(name.contains(query)
+            ||password.contains(query)
+            ||birthday.getDate().contains(query)
+            ||Integer.toString(getAge()).contains(query)
+            ||sex.toString().contains(query)
+            ||marriage.toString().contains(query)
+            ||resources.getString(sex.getStrId()).contains(query)
+            ||resources.getString(marriage.getStrId()).contains(query)) return true;
+        //else if(children) return true;
+        else return false;
     }
 }
