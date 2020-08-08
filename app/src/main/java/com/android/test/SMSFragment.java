@@ -134,12 +134,12 @@ public class SMSFragment extends Fragment {
                 case SmsManager.RESULT_ERROR_RADIO_OFF: txt="ERROR_RADIO_OFF"; break;
             }Toast.makeText(context, txt, Toast.LENGTH_SHORT).show(); }
     };
-    BroadcastReceiver recvReceiver = new BroadcastReceiver() {
+    BroadcastReceiver recvReceiver = new ReceiveSMS(); /*new BroadcastReceiver() {
         @Override public void onReceive(Context context, Intent intent) {
             String txt="";
             switch (getResultCode()){
                 case RESULT_OK: txt="SMS Delivered"; break;
                 case RESULT_CANCELED: txt="SMS Delivered Fail"; break;
             }Toast.makeText(context, txt, Toast.LENGTH_SHORT).show(); }
-    };
+    };*/
 }

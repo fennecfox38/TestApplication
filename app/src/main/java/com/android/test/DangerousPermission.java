@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 
 public class DangerousPermission {
-    public final static int REQUEST_CODE_PERMISSION=100;
+    private int REQUEST_CODE_PERMISSION=100;
     private AppCompatActivity activity;
     private Fragment fragment;
     private Context context;
@@ -48,6 +48,7 @@ public class DangerousPermission {
         this.gotoSettingTitle =settingTitle;
         this.gotoSettingMessage =settingMessage;
     }
+    public void setRequestCode(int REQUEST_CODE_PERMISSION){this.REQUEST_CODE_PERMISSION=REQUEST_CODE_PERMISSION;}
 
     public void tryAction(){
         ArrayList<String> denied_list = new ArrayList<>();

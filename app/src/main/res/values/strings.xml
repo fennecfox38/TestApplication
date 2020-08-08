@@ -61,7 +61,7 @@
     <string name="NoPDFViewer">No PDF Viewer available</string>
     <string name="FileNotExist">That file does not exist.</string>
     <string name="credit1">Fennec Fox</string>
-    <string name="credit2" translatable="false" >깜이</string>
+    <string name="credit2" translatable="false">깜이</string>
     <string name="switchImage">Switch</string>
     <string name="WebPage">WebPage</string>
     <string name="Email">Email</string>
@@ -70,6 +70,7 @@
     <string name="SMS">SMS</string>
     <string name="Recipient">Recipient</string>
     <string name="smsbody">Text Message</string>
+    <string name="SMSReceived">SMS Received</string>
     <string name="WarnCallPermissionDenied">Cannot call without permission grant.</string>
     <string name="WarnSMSPermissionDenied">Cannot send SMS without permission grant.</string>
     <string name="WarnPermissionDenied">Cannot do action without permission grant.</string>

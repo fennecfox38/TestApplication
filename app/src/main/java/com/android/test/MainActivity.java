@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar_main = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar_main); // Set ToolBar as AppBar
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.app_name));
         assert actionBar != null; // Show title and 'HomeAsUp' on Action Bar
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_hamburger);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_HOME_AS_UP);
@@ -81,7 +82,13 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setTitle(getString(R.string.Warning));
         dialogBuilder.setMessage(getString(R.string.AskClose));
         dialogBuilder.setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialog, int which) { MainActivity.super.onBackPressed(); } });
+            @Override public void onClick(DialogInterface dialog, int which) {
+                moveTaskToBack(true);
+                finish(); // finishAndRemoveTask();
+                android.os.Process.killProcess(android.os.Process.myPid());
+                //MainActivity.super.onBackPressed();
+            }
+        });
         dialogBuilder.setNegativeButton(getString(R.string.Cancel), new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) { }});
         dialogBuilder.show();
@@ -91,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId()==android.R.id.home)
             drawer_main.openDrawer(GravityCompat.START);
         /*switch(item.getItemId()){
-            case android.R.id.home:  break;
+            case android.R.id.home: drawer_main.openDrawer(GravityCompat.START); break;
         }*/
         return super.onOptionsItemSelected(item);
     }

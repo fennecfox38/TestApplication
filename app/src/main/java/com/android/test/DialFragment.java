@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 public class DialFragment extends Fragment {
-    private DangerousPermission permission_Call;
+    private DangerousPermission permission_read_state, permission_Call;
     private MainActivity activity;
     private Context context;
     private View rootView;
@@ -88,17 +89,31 @@ public class DialFragment extends Fragment {
                 return true; }
         });
 
+        permission_read_state = new DangerousPermission(this,context);
+        permission_read_state.setPermissionList(new String[]{Manifest.permission.READ_PHONE_STATE});
+        permission_read_state.setAction(new Runnable() {
+            @Override public void run() {
+                TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                strNum = telephonyManager.getLine1Number();
+                if(strNum.startsWith("+82")) strNum=strNum.replace("+82","0");
+            }
+        });
+        permission_read_state.setDialog(getString(R.string.Warning),getString(R.string.WarnPermissionDenied),
+                getString(R.string.WarnPermissionDenied),getString(R.string.GrantPermissionOnSetting));
+        permission_read_state.setRequestCode(103);
+
         permission_Call = new DangerousPermission(this,context);
         permission_Call.setPermissionList(new String[]{Manifest.permission.CALL_PHONE});
         permission_Call.setAction(new Runnable() {
             @Override public void run() {
-                String parse="tel:"+strNum.replaceAll("#","%23");
-                Toast.makeText(context,"Call to "+strNum,Toast.LENGTH_LONG).show();
+                String parse="tel:"+getPhoneNumber().replaceAll("#","%23");
+                Toast.makeText(context,"Call to "+getPhoneNumber(),Toast.LENGTH_LONG).show();
                 startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(parse)));
             }
         });
         permission_Call.setDialog(getString(R.string.Warning),getString(R.string.WarnCallPermissionDenied),
                 getString(R.string.WarnCallPermissionDenied),getString(R.string.GrantPermissionOnSetting));
+        permission_Call.setRequestCode(104);
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -142,15 +157,23 @@ public class DialFragment extends Fragment {
     private void redirectSMS(){
         Fragment frag_sms = new SMSFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("recipient",strNum.replaceAll("#","%23"));
+        bundle.putString("recipient",getPhoneNumber().replaceAll("#","%23"));
         bundle.putString("smsbody",getString(R.string.SentFromTestApplication));
         frag_sms.setArguments(bundle);
         activity.switchFragmentTo(frag_sms);
     }
 
+    private String getPhoneNumber(){
+        if(strNum.length()!=0) return strNum;
+        permission_read_state.tryAction();
+        txt_number.setText(strNum);
+        return strNum;
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        permission_Call.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        if(requestCode==103) permission_read_state.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        if(requestCode==104) permission_Call.onRequestPermissionsResult(requestCode,permissions,grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

@@ -17,6 +17,9 @@ import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.android.test.R;
 
 import java.util.Calendar;
@@ -40,33 +43,7 @@ public class PersonalData implements Parcelable, Comparable  { // class 'Persona
         this.children = children;
     } // Constructor above set member values.
 
-    protected PersonalData(Parcel in) { // this constructor set member values by Parcelable.
-        name = in.readString();
-        password = in.readString();
-        birthday = new Date();
-        birthday.setYear(in.readInt());
-        birthday.setMonth(in.readInt());
-        birthday.setDay(in.readInt());
-        age=getAge(); //'age' shall not be arbitrary. set 'age' by 'int getAge()'
-        setSex(in.readInt());
-        setMarriage(in.readInt());
-        children = in.readByte() != 0; // boolean type is read and written by Byte.
-    }
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(password);
-        dest.writeInt(birthday.year);
-        dest.writeInt(birthday.month);
-        dest.writeInt(birthday.day);
-        dest.writeInt(sex.ordinal()); // transmit enum as integer by ordinal()
-        dest.writeInt(marriage.ordinal()); // transmit enum as integer by ordinal()
-        dest.writeByte((byte) (children ? 1 : 0)); // cast boolean to byte.
-    }
-    @Override public int describeContents() { return 0; }
-    public static final Creator<PersonalData> CREATOR = new Creator<PersonalData>() {
-        @Override public PersonalData createFromParcel(Parcel in) { return new PersonalData(in); }
-        @Override public PersonalData[] newArray(int size) { return new PersonalData[size]; }
-    };
+
 
     public void resetData(){ // method that reset all member values by default.
         name=password=null;
@@ -109,14 +86,27 @@ public class PersonalData implements Parcelable, Comparable  { // class 'Persona
         return age;
     }
 
-    @Override public int compareTo(Object t) {
-        PersonalData pd=(PersonalData)t;
-        int res= this.name.compareTo(pd.name);
-        if(res!=0) return res;
-        else if((res=this.birthday.getDate().compareTo(pd.birthday.getDate()))!=0) return res;
-        else if((res=this.sex.ordinal()-pd.sex.ordinal())!=0) return res;
-        else if((res=this.marriage.ordinal()-pd.marriage.ordinal())!=0) return res;
-        else return ((this.children?1:0)-(pd.children?1:0));
+    public enum Sex{ // value of Sex defined that it can be more than two so that we implements enum.
+        Male(R.string.Male,"Male"),
+        Female(R.string.Female,"Female"),
+        NA(R.string.NA,"N/A"); // Not applicable (in case)
+
+        final private int strId; // contains string resources id.
+        final private String str; // contains default string.
+        Sex(int strId, String str){this.strId=strId; this.str=str;} // constructor & setter.
+        public int getStrId(){return strId;}
+        public String toString(){return str;}
+    }
+    public enum Marriage { // same concept with enum type of Sex.
+        Single(R.string.Single,"Single"),
+        Married(R.string.Married,"Married"),
+        Divorced(R.string.Divorced,"Divorced");
+
+        final private int strId;
+        final private String str;
+        Marriage(int strId, String str){this.strId=strId; this.str=str;}
+        public int getStrId(){return strId;}
+        public String toString(){return str;}
     }
 
     protected class Date {
@@ -155,29 +145,16 @@ public class PersonalData implements Parcelable, Comparable  { // class 'Persona
         private String make2digit(String num){ // make number 2 digit by adding 0 at front.
             return ( (num.length()<2) ? "0"+num : num );
         }
-    }
-
-    public enum Sex{ // value of Sex defined that it can be more than two so that we implements enum.
-        Male(R.string.Male,"Male"),
-        Female(R.string.Female,"Female"),
-        NA(R.string.NA,"N/A"); // Not applicable (in case)
-
-        final private int strId; // contains string resources id.
-        final private String str; // contains default string.
-        Sex(int strId, String str){this.strId=strId; this.str=str;} // constructor & setter.
-        public int getStrId(){return strId;}
-        public String toString(){return str;}
-    }
-    public enum Marriage { // same concept with enum type of Sex.
-        Single(R.string.Single,"Single"),
-        Married(R.string.Married,"Married"),
-        Divorced(R.string.Divorced,"Divorced");
-
-        final private int strId;
-        final private String str;
-        Marriage(int strId, String str){this.strId=strId; this.str=str;}
-        public int getStrId(){return strId;}
-        public String toString(){return str;}
+        public int compareTo(Date date) {
+            int res = year-date.year;
+            if(res!=0) return res;
+            else if((res=month-date.month)!=0) return res;
+            else return (day-date.day);
+        }
+        @Override public boolean equals(@Nullable Object obj) {
+            Date date = (Date) obj;
+            return (year==date.year&&month==date.month&&day==date.day);
+        }
     }
 
     @Override public String toString() { // Make those information to String.
@@ -201,16 +178,65 @@ public class PersonalData implements Parcelable, Comparable  { // class 'Persona
         return txt;
     }
 
-    public boolean query(String query,Resources resources){
-        if(name.contains(query)
-            ||password.contains(query)
-            ||birthday.getDate().contains(query)
-            ||Integer.toString(getAge()).contains(query)
-            ||sex.toString().contains(query)
-            ||marriage.toString().contains(query)
-            ||resources.getString(sex.getStrId()).contains(query)
-            ||resources.getString(marriage.getStrId()).contains(query)) return true;
-        //else if(children) return true;
+    public boolean query(String query){
+        if(query.length()==0||name.contains(query)) return true;
         else return false;
+    }
+
+    protected PersonalData(Parcel in) { // this constructor set member values by Parcelable.
+        name = in.readString();
+        password = in.readString();
+        birthday = new Date();
+        birthday.setYear(in.readInt());
+        birthday.setMonth(in.readInt());
+        birthday.setDay(in.readInt());
+        age=getAge(); //'age' shall not be arbitrary. set 'age' by 'int getAge()'
+        setSex(in.readInt());
+        setMarriage(in.readInt());
+        children = in.readByte() != 0; // boolean type is read and written by Byte.
+    }
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(password);
+        dest.writeInt(birthday.year);
+        dest.writeInt(birthday.month);
+        dest.writeInt(birthday.day);
+        dest.writeInt(sex.ordinal()); // transmit enum as integer by ordinal()
+        dest.writeInt(marriage.ordinal()); // transmit enum as integer by ordinal()
+        dest.writeByte((byte) (children ? 1 : 0)); // cast boolean to byte.
+    }
+    @Override public int describeContents() { return 0; }
+    public static final Creator<PersonalData> CREATOR = new Creator<PersonalData>() {
+        @Override public PersonalData createFromParcel(Parcel in) { return new PersonalData(in); }
+        @Override public PersonalData[] newArray(int size) { return new PersonalData[size]; }
+    };
+    @Override public int compareTo(Object t) {
+        PersonalData pd=(PersonalData)t;
+        int res= this.name.compareTo(pd.name);
+        if(res!=0) return res;
+        else if((res=this.birthday.compareTo(pd.birthday))!=0) return res;
+        else if((res=this.sex.ordinal()-pd.sex.ordinal())!=0) return res;
+        else if((res=this.marriage.ordinal()-pd.marriage.ordinal())!=0) return res;
+        else return ((this.children?1:0)-(pd.children?1:0));
+    }
+
+    @Override public boolean equals(Object obj) {
+        PersonalData pd = (PersonalData) obj;
+        return (name.equals(pd.name)
+            &&password.equals(pd.password)
+            &&birthday.equals(pd.birthday)
+            &&sex.ordinal()==pd.sex.ordinal()
+            &&marriage.ordinal()==pd.marriage.ordinal()
+            &&children==pd.children);
+        //return super.equals(obj);
+    }
+
+    protected PersonalData clone(){
+        PersonalData pd = new PersonalData();
+        pd.name=name; pd.password=password;
+        pd.age=age; pd.sex=sex;
+        pd.marriage=marriage; pd.children=children;
+        pd.birthday=birthday;
+        return pd;
     }
 }

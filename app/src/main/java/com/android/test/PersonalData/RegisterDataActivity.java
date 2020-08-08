@@ -44,16 +44,12 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.Locale;
 
 public class RegisterDataActivity extends AppCompatActivity {
-    private PersonalData person;
+    private PersonalData person,original;
     private EditText edittxt_name,edittxt_pw,edittxt_birth,edittxt_age;
-    private RadioGroup rGroup_sex;
     private RadioButton rBtn_male, rBtn_female, rBtn_NA;
     private Spinner spin_marriage;
-    private ArrayAdapter<String> arrAdapt_spin;
     private CheckBox chkbx_child;
-    private Button btn_verify, btn_submit, btn_clear;
     private DrawerLayout drawer_register_data;
-    private NavigationView nav_register_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -63,7 +59,7 @@ public class RegisterDataActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Enable 'HomeAsUp' from ActionBar.
 
         drawer_register_data = findViewById(R.id.drawer_register_data);
-        nav_register_data = findViewById(R.id.navigationView);
+        NavigationView nav_register_data = findViewById(R.id.navigationView);
         nav_register_data.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -118,7 +114,7 @@ public class RegisterDataActivity extends AppCompatActivity {
             }
         });
 
-        rGroup_sex=findViewById(R.id.rGroup_sex); // set RadioGroup for 'Sex'.
+        RadioGroup rGroup_sex = findViewById(R.id.rGroup_sex); // set RadioGroup for 'Sex'.
         rGroup_sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId){
@@ -133,7 +129,8 @@ public class RegisterDataActivity extends AppCompatActivity {
         rBtn_NA=findViewById(R.id.rBtn_NA);
 
         spin_marriage=findViewById(R.id.spin_marriage); // set Spinner for 'Marriage'.
-        arrAdapt_spin= new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,getResources().getStringArray(R.array.marriage_list));
+        ArrayAdapter<String> arrAdapt_spin =
+                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.marriage_list));
         arrAdapt_spin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin_marriage.setAdapter(arrAdapt_spin);
         spin_marriage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -166,20 +163,22 @@ public class RegisterDataActivity extends AppCompatActivity {
                 getDataFromField(); // Get renewed Data from field before transmit data.
                 Intent resultBack = new Intent();
                 resultBack.putExtra("person",person);
+                resultBack.putExtra("original",original);
                 setResult(RESULT_OK,resultBack);
                 finish();
             }
             protected void clear(){ person.resetData(); /*update();*/ loadDataToField(); }
         };
-        btn_verify=findViewById(R.id.btn_verify);
-        btn_submit=findViewById(R.id.btn_submit);
-        btn_clear=findViewById(R.id.btn_clear);
+        Button btn_verify = findViewById(R.id.btn_verify);
+        Button btn_submit = findViewById(R.id.btn_submit);
+        Button btn_clear = findViewById(R.id.btn_clear);
         btn_verify.setOnClickListener(onBtnClickListen);
         btn_submit.setOnClickListener(onBtnClickListen);
         btn_clear.setOnClickListener(onBtnClickListen);
 
         // Get 'person' from transmitted Intent.
-        person = getIntent().getParcelableExtra("person");
+        original = getIntent().getParcelableExtra("person");
+        person = original.clone();
         loadDataToField(); // load data from object to Edit field ('View' object)
     }
 
@@ -224,7 +223,11 @@ public class RegisterDataActivity extends AppCompatActivity {
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home: onBackPressed(); break;
-            case R.id.menu_btn_nav: drawer_register_data.openDrawer(GravityCompat.END);
+            case R.id.menu_btn_nav:
+                if(drawer_register_data.isDrawerOpen(GravityCompat.END))
+                    drawer_register_data.closeDrawer(GravityCompat.END);
+                else drawer_register_data.openDrawer(GravityCompat.END);
+            break;
         } return super.onOptionsItemSelected(item);
     }
 }

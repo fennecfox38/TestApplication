@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context=".SMSDisplayActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/colorEdgeEffect"/>
+    <TextView
+        android:id="@+id/txt_sms_sender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="start"
+        android:background="?android:attr/colorBackground"
+        android:textSize="20sp"
+        android:text="SMS Sender"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/colorEdgeEffect"/>
+    <TextView
+        android:id="@+id/txt_sms_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="?android:attr/colorBackground"
+        android:textSize="15sp"
+        android:text="SMS Message"/>
+    <TextView
+        android:id="@+id/txt_sms_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="end"
+        android:background="?android:attr/colorBackground"
+        android:textSize="10sp"
+        android:text="received date"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/colorEdgeEffect"/>
+    <Button
+        android:id="@+id/btn_sms_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/colorBackground"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textColorHighlight="?android:attr/textColorHighlight"
+        android:text="OK"/>
+
+</LinearLayout>
